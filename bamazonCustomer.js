@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var cTable = require("console.table");
 
 //Creating connection to MySQL database
 var connection = mysql.createConnection({
@@ -12,8 +13,8 @@ var connection = mysql.createConnection({
     user: "root",
 
     //Password
-    password: "",
-    database: "bamazon",
+    password: "Dukeg0817!",
+    database: "bamazon"
 });
 
 //Connecting to MySQL server and database
@@ -45,20 +46,9 @@ function start() {
             var department = answer.department;
             var stock_quantity = answer.stockQuantity;
 
-            connection.query(
-                "INSERT INTO products SET ?"
-                {
-                    product_name: answer.productChoice,
-                    department_name: answer.department,
-                    price: answer.productAmount || 0,
-                    stock_quantity = answer.stockQuantity || 0
-                },
-                function (err) {
-                    if (err) throw err;
-                    console.log("Insufficient Quantity!");
-                    //Re-prompt user to restart purchase
-                    start();
-                }
-            );
+            connection.query("SELECT * FROM products WHERE ?", { item_id: productChoice }, function (err, response) {
+                if (err) throw err;
+                console.log(response);
+            });
         });
-}
+};
