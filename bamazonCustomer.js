@@ -31,16 +31,16 @@ connection.connect(function (err) {
 function start() {
     inquirer
         .prompt([
-        {
-            name: "productChoice",
-            type: "input",
-            message: "What is the ID of the product you would like to buy?"
-        },
-        {
-            name: "productAmount",
-            type: "input",
-            message: "How many units would you like to buy"
-        }
+            {
+                name: "productChoice",
+                type: "input",
+                message: "What is the ID of the product you would like to buy?"
+            },
+            {
+                name: "productAmount",
+                type: "input",
+                message: "How many units would you like to buy"
+            }
         ]).then(function (answer) {
             var productChoice = answer.productChoice;
             var productAmount = answer.productAmount;
@@ -49,30 +49,31 @@ function start() {
 
             connection.query("SELECT * FROM products WHERE ?", { item_id: productChoice }, function (err, response) {
                 if (err) throw err;
-                if(productAmount > response[0].stock_quantity){
+                if (productAmount > response[0].stock_quantity) {
                     console.log("Insufficient Quantity!");
-                }else{
+                    connection.end();
+                } else {
                     totalCost = productAmount * response[0].price;
+                    totalQuantity = response[0].stock_quantity - productAmount;
                     console.log(totalCost);
-                };
-                // console.log(response);
 
-                connection.end();
-            });
+                    connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: totalQuantity}, {item_id: productChoice}], function(err, response) {
+                        if (err) throw err;
+                        console.log("Your inventory has been updated");
+                        connection.end();
+                    });
+        };
+
+
+});
         });
 };
 
-function displayInv(){
+function displayInv() {
     var query = `SELECT * FROM products`;
-    connection.query(query, function(err, response){
+    connection.query(query, function (err, response) {
         if (err) throw err;
         console.table(response);
         start();
     });
 };
-
-// if (userQuantity > databaseAmount){
-// console.log("not enough");
-// } else {
-
-// }
