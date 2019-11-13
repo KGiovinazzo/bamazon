@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     //Password
-    password: "Dukeg0817!",
+    password: "DukeGio0817!",
     database: "bamazon"
 });
 
@@ -21,7 +21,7 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     //Run the start function after connection is made
-    start();
+    displayInv();
 });
 
 //Function that will prompt the action the user should take
@@ -40,7 +40,6 @@ function start() {
             message: "How many units would you like to buy"
         })
         .then(function (answer) {
-            //Based off what the user chooses, then we ask how many units they want to buy
             var productChoice = answer.productChoice;
             var productAmount = answer.productAmount;
             var department = answer.department;
@@ -52,3 +51,18 @@ function start() {
             });
         });
 };
+
+function displayInv(){
+    var query = `SELECT * FROM products`;
+    connection.query(query, function(err, response){
+        if (err) throw err;
+        console.table(response);
+        connection.end();
+    });
+};
+
+if (userQuantity > databaseAmount){
+console.log("not enough");
+} else {
+    
+}
