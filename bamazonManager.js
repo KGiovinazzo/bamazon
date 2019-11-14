@@ -76,7 +76,7 @@ function addInv() {
         if (err) throw err;
         console.table(response);
 
-        inquire.prompt([
+        inquirer.prompt([
             {
                 name: "item",
                 type: "input",
