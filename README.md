@@ -1,5 +1,9 @@
 # Bamazon Application
 
+### Screencastify Video:
+
+https://drive.google.com/file/d/1kYRywgQkkvr_GBI157ihQK0ofRBKjXQ_/view
+
 # Assignment Requirements
 ### Challenge #1: Customer View (Minimum Requirement)
 
@@ -66,6 +70,5 @@
 
   * If a manager selects `Add New Product`, it should allow the manager to add a completely new product to the store.
   
-  ### Screencastify Video:
   
   
